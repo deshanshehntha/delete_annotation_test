@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import com.example.demo.audit.deleteaudit.DeleteAudit;
 import com.example.demo.model.ParticipantAccount;
 import com.example.demo.model.ParticipantAccountLocation;
 import com.example.demo.service.ParticipantAccountMapper;
@@ -86,24 +87,26 @@ public class ParticipantAccountDAO {
         }
     }
 
-
+    @DeleteAudit(
+            schemaName = "mdm",
+            tableName = "participant_account_location",
+            columnNames = {"location_id", "location_name"},
+            selectionColumnNames = {"fk_participant_account_id"},
+            selectionValueNames = {"fk_participant_account_id"},
+            pkColumnName = "fk_participant_account_id"
+    )
     public boolean deleteParticipantAccLocations(Long participantAccountId, List<Long> idsToBeDeleted) { //might have to change the query
-
         String sql = "delete from mdm.participant_account_location " +
-                "where fk_participant_account_id = :" + PARAM_NAME_PARTICIPANT_ACC_ID +
-                " AND location_id = :location_id";
-
-        int count = 0;
-        for (Long idTobeDeleted : idsToBeDeleted) {
-
+                "where location_id in (:" + "location_id" + ")"+
+                "AND "+ "fk_participant_account_id" +" = :"+PARAM_NAME_PARTICIPANT_ACC_ID;
             MapSqlParameterSource parameters = new MapSqlParameterSource();
             parameters.addValue(PARAM_NAME_PARTICIPANT_ACC_ID, participantAccountId);
-            parameters.addValue("location_id", idTobeDeleted);
-            count = count + namedJdbcTemplate.update(sql, parameters);
-        }
-
-        return count > 0;
+            parameters.addValue("location_id", idsToBeDeleted);
+            int count =  namedJdbcTemplate.update(sql, parameters);
+            return count > 0;
     }
+
+
 
     public boolean createParticipantAccountLocations(long participantAccId,
                                                      List<ParticipantAccountLocation> locationList) {

@@ -86,9 +86,12 @@ public class AuditTrailDAO {
 
                 String primaryKeyValue = sqlRowSet.getString(pkColumnName);
 
-                for (int i = 0; i < auditableColumnNames.length; i++) {
-                    String columnName = auditableColumnNames[i];
-                    rowData.put(columnName, sqlRowSet.getString(columnName));
+                if(auditableColumnNames.length != 0 ) {
+
+                    for (int i = 0; i < auditableColumnNames.length; i++) {
+                        String columnName = auditableColumnNames[i];
+                        rowData.put(columnName, sqlRowSet.getString(columnName));
+                    }
                 }
 
                 results.put(primaryKeyValue, rowData);

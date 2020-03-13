@@ -27,18 +27,18 @@ public class MainController {
 
         List<ParticipantAccountLocation> participantAccountLocationList = new ArrayList<>();
 
-        ParticipantAccountLocation participantAccountLocation1 = new ParticipantAccountLocation();
-        participantAccountLocation1.setLocationId(1L);
-        participantAccountLocation1.setLocationName("My Location1");
-
-        participantAccountLocationList.add(participantAccountLocation1);
-
-
-        ParticipantAccountLocation participantAccountLocation = new ParticipantAccountLocation();
-        participantAccountLocation.setLocationId(2L);
-        participantAccountLocation.setLocationName("My Location");
-
-        participantAccountLocationList.add(participantAccountLocation);
+//        ParticipantAccountLocation participantAccountLocation1 = new ParticipantAccountLocation();
+//        participantAccountLocation1.setLocationId(1L);
+//        participantAccountLocation1.setLocationName("My Location1");
+//
+//        participantAccountLocationList.add(participantAccountLocation1);
+//
+//
+//        ParticipantAccountLocation participantAccountLocation = new ParticipantAccountLocation();
+//        participantAccountLocation.setLocationId(2L);
+//        participantAccountLocation.setLocationName("My Location");
+//
+//        participantAccountLocationList.add(participantAccountLocation);
 
         ParticipantAccountLocation participantAccountLocation3 = new ParticipantAccountLocation();
         participantAccountLocation3.setLocationId(4L);

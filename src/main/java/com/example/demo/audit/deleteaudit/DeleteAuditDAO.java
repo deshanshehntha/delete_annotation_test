@@ -1,6 +1,5 @@
 package com.example.demo.audit.deleteaudit;
 
-import com.example.demo.audit.AuditTrail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;

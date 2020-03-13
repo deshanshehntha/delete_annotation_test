@@ -172,7 +172,7 @@ public class LocationDAO {
     @DeleteAudit(
             schemaName = "mdm",
             tableName = "location",
-            columnNames = {"location_name","location_db_id"},
+            columnNames = {},
             selectionColumnNames = {"location_db_id"},
             selectionValueNames = {"location_db_id"},
             pkColumnName = "location_db_id"
@@ -185,15 +185,4 @@ public class LocationDAO {
         int count = namedParameterJdbcTemplate.update(sql, parameters);
         return count > 0;
     }
-//
-//    public boolean deleteProductSupplierRelationships(List<Long> productSupplierIds, Long productId) {
-//        String sql = "delete from mdm.product_supplier_relationship " +
-//                "where fk_participant_account_id in (:" + PARAM_NAME_PRODUCT_SUPPLIER_IDS + ") " +
-//                "and fk_product_id =:" + PARAM_NAME_PRODUCT_ID;
-//        MapSqlParameterSource parameters = new MapSqlParameterSource();
-//        parameters.addValue(PARAM_NAME_PRODUCT_SUPPLIER_IDS, productSupplierIds);
-//        parameters.addValue(PARAM_NAME_PRODUCT_ID, productId);
-//        int count = namedJdbcTemplate.update(sql, parameters);
-//        return count > NumericConstant.INT_ZERO;
-//    }
 }

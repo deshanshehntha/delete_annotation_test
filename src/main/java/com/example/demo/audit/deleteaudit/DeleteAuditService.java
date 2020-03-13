@@ -1,6 +1,5 @@
 package com.example.demo.audit.deleteaudit;
 
-import com.example.demo.audit.AuditTrail;
 import com.example.demo.audit.AuditTrailDAO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,36 @@ public class DeleteAuditService {
     private final AuditTrailDAO auditTrailDAO;
     private final DeleteAuditDAO deleteAuditDAO;
 
+    public static Object getValueOf(Object className, String variableName) throws NoSuchFieldException, IllegalAccessException {
+        Field field;
 
+        Field[] declaredFields = className.getClass().getDeclaredFields();
+        ArrayList<String> declaredFieldNames = new ArrayList<>();
+        for (int i = 0; i < declaredFields.length; i++) {
+            declaredFieldNames.add(declaredFields[i].getName());
+        }
+
+        if (declaredFieldNames.contains(variableName)) {
+            field = className.getClass().getDeclaredField(variableName);
+            field.setAccessible(true);
+            return field.get(className);
+
+        } else {
+            Field[] declaredSuperFields = className.getClass().getSuperclass().getDeclaredFields();
+            ArrayList<String> declaredSuperClassFieldNames = new ArrayList<>();
+
+            for (int i = 0; i < declaredSuperFields.length; i++) {
+                declaredSuperClassFieldNames.add(declaredSuperFields[i].getName());
+            }
+            if (declaredSuperClassFieldNames.contains(variableName)) {
+                field = className.getClass().getSuperclass().getDeclaredField(variableName);
+                field.setAccessible(true);
+                return field.get(className);
+            }
+        }
+
+        return null;
+    }
 
     public void populateAuditEntryBeforeUpdate(String[] targetMethodParamNames, Object[] targetMethodParamValues,
                                                DeleteAudit auditAnnotation, boolean isKeyFieldValuePresent) throws NoSuchFieldException,
@@ -144,37 +172,6 @@ public class DeleteAuditService {
             }
         }
         return valid;
-    }
-
-    public static Object getValueOf(Object className, String variableName) throws NoSuchFieldException, IllegalAccessException {
-        Field field;
-
-        Field[] declaredFields = className.getClass().getDeclaredFields();
-        ArrayList<String> declaredFieldNames = new ArrayList<>();
-        for (int i = 0; i < declaredFields.length; i++) {
-            declaredFieldNames.add(declaredFields[i].getName());
-        }
-
-        if (declaredFieldNames.contains(variableName)) {
-            field = className.getClass().getDeclaredField(variableName);
-            field.setAccessible(true);
-            return field.get(className);
-
-        } else {
-            Field[] declaredSuperFields = className.getClass().getSuperclass().getDeclaredFields();
-            ArrayList<String> declaredSuperClassFieldNames = new ArrayList<>();
-
-            for (int i = 0; i < declaredSuperFields.length; i++) {
-                declaredSuperClassFieldNames.add(declaredSuperFields[i].getName());
-            }
-            if (declaredSuperClassFieldNames.contains(variableName)) {
-                field = className.getClass().getSuperclass().getDeclaredField(variableName);
-                field.setAccessible(true);
-                return field.get(className);
-            }
-        }
-
-        return null;
     }
 
 }
